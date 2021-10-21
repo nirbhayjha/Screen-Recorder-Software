@@ -1,0 +1,29 @@
+Screen recorder software:-
+
+import cv2
+import pyautogui as p
+import numpy as np
+
+rs= p.size()  #create resolution of screen
+
+fn= input("enter path")  #filename and location to store recorded video
+fps= 60.0   #fix frame rate
+
+fourcc= cv2.VideoWriter_fourcc(*"XVID") 
+output= cv2.VideoWriter(fn, fourcc, fps, rs)
+
+cv2.namedWindow("Live_Recording", cv2.WINDOW_NORMAL)  #imshow function
+cv2.resizeWindow("Live_Recording", (720, 450))
+
+while True:
+    img= p.screenshot()  #py library take SS and store to img varaible
+    f= np.array(img)  #capturing the image and storing into an array
+    f= cv2.cvtColor(f, cv2.COLOR_BGR2RGB)
+    output.write(f)
+    cv2.imshow("Live_Recording", f)  #to see the live recording
+    k= cv2.waitKey(1)
+    if k==ord("z") & 0xFF:
+        break
+        
+output.release()
+cv2.destroyAllWindows()
